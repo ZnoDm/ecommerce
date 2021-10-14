@@ -1,10 +1,51 @@
 <x-app-layout>
-    <div class="container py-8">
-        <div class="bg-white rounded-lg shadow-lg px-6 py-4">
-            <p class="text-gray-700 uppercase"><span class="font-semibold">Número de orden:</span> Orden-{{$order->id}}</p>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <div class="bg-white rounded-lg shadow-lg px-12 py-8 flex items-center">
+            <div class="relative">
+                <div class="{{ ($order->status >= 2 && $order->status != 5) ?'bg-blue-400 ':'bg-gray-400 '}} rounded-full h-12 w-12  flex items-center justify-center">
+                    <i class="fas fa-check text-white"></i>
+                </div>
+                <div class="absolute -left-1.5">
+                    <p>Recibido</p>
+                </div>
+            </div>
+
+            <div class="{{ ($order->status >= 3 && $order->status != 5) ?'bg-blue-400 ':'bg-gray-400 '}} h-2 flex-1 mx-2"></div>
+
+            <div class="relative">
+                <div class="{{ ($order->status >= 3 && $order->status != 5) ?'bg-blue-400 ':'bg-gray-400 '}} rounded-full h-12 w-12 flex items-center justify-center">
+                    <i class="fas fa-truck text-white"></i>
+                </div>
+                <div class="absolute -left-1">
+                    <p>Enviado</p>
+                </div>
+            </div>
+
+            <div class="{{ ($order->status >= 4 && $order->status != 5) ?'bg-blue-400 ':'bg-gray-400 '}} h-2 flex-1 mx-2"></div>
+
+            <div class="relative">
+                <div class="{{ ($order->status >= 4 && $order->status != 5) ?'bg-blue-400 ':'bg-gray-400 '}} rounded-full h-12 w-12 flex items-center justify-center">
+                    <i class="fas fa-check text-white"></i>
+                </div>
+                <div class="absolute -left-3">
+                    <p>Entregado</p>
+                </div>
+            </div>
         </div>
 
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <div class="bg-white rounded-lg shadow-lg px-6 py-4 my-6 flex items-center ">
+            <p class="text-gray-700 uppercase"><span class="font-semibold">Número de orden:</span> Orden-{{$order->id}}</p>
+
+            @if ($order->status == 1)
+                <x-button-enlace class="ml-auto" href="{{route('orders.payment',$order)}}">
+                    Ir a Pagar
+                </x-button-enlace>
+            @endif
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6 my-6">
             <div class="grid grid-cols-2 gap-6 text-gray-700">
                 <div>
                     <p class="text-lg font-semibold uppercase">Envío</p>
@@ -17,7 +58,7 @@
                     @else
 
                         <p class="text-sm">Los productos serán enviados a:</p>
-                        <p class="text-sm">{{order->address}}</p>
+                        <p class="text-sm">{{$order->address}}</p>
                         <p>{{$order->department->name}}-{{$order->city->name}}-{{$order->district->name}}</p>
                     @endif
                 </div>
@@ -74,31 +115,14 @@
                             <td class="text-center">
                                 {{$item->price * $item->qty}} USD
                             </td>
+                            
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
 
-        <div class="bg-white rounded-lg shadow-lg p-6 flex justify-between items-center">
-            <img src="{{asset('img/tarjetas.jpg')}}" alt="" class="h-12">
-            <div class="text-gray-700">
-                <div class="flex justify-between text-sm font-semibold">
-                    <p>
-                        Subtotal: 
-                    </p>
-                    <span>{{$order->total - $order->shipping_cost}} USD</span>
-                </div>
-                <div class="flex justify-between text-sm font-semibold">
-                    <p>
-                        Envío: 
-                    </p>
-                    <span>{{$order->shipping_cost}} USD</span>
-                </div>
-                <p class="font-lg font-semibold uppercase">
-                    Total: {{$order->total}} USD
-                </p>
-            </div>
-        </div>
+        
     </div>
+
 </x-app-layout>

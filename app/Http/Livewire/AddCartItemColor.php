@@ -28,6 +28,7 @@ class AddCartItemColor extends Component
         $this->quantity = qty_available($this->product->id,$color->id);
         //Con pivot puedes encontrar la relacion intermedia
         $this->options['color'] = $color->name;
+        $this->options['color_id'] = $color->id;
     }
     
     public function decrement(){
