@@ -87,7 +87,7 @@
                                 </x-jet-secondary-button>
                                 
                                 <x-jet-danger-button
-                                wire:click="$emit('deletePivot',{{$product_color->pivot->id}})">
+                                wire:click="$emit('deleteColorProduct',{{$product_color->pivot->id}})">
                                     Eliminar
                                 </x-jet-danger-button>
                             </td>
@@ -140,30 +140,5 @@
         </x-slot>
     </x-jet-dialog-modal>
 
-    @push('script')
-        <script>
-            Livewire.on('deletePivot',pivot => {
-                Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                if (result.isConfirmed) {
-
-                    Livewire.emitTo('admin.color-product','delete',pivot);
-
-                    Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                    )
-                }
-                })
-            })            
-        </script>
-    @endpush
+  
 </div>

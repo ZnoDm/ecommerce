@@ -4,9 +4,11 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Illuminate\Support\Str;
 class EditProduct extends Component
@@ -20,6 +22,7 @@ class EditProduct extends Component
 
     public $brands;
 
+    protected $listeners = ['refreshPost'];
     protected $rules = [
         'category_selected' => 'required',
         'product.subcategory_id' => 'required',
@@ -44,6 +47,10 @@ class EditProduct extends Component
         $this->brands = Brand::whereHas('categories',function(Builder $query){
             $query->where('category_id',$this->category_selected);
         })->get();
+    }
+
+    public function refreshPost(){
+        $this->product = $this->product->fresh();
     }
 
     public function updatedCategorySelected($value){
@@ -82,6 +89,11 @@ class EditProduct extends Component
         $this->emit('saved');
     }
 
+    public function deleteImage(Image $image){
+        Storage::delete([$image->url]);;
+        $image->delete();
+        $this->product = $this->product->fresh();
+    }
     public function render()
     {
         return view('livewire.admin.edit-product')->layout('layouts.admin');

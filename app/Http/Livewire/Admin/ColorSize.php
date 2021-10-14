@@ -5,13 +5,14 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Color;
 use Livewire\Component;
 use App\Models\ColorSize as Pivot;
+use SebastianBergmann\Environment\Console;
 
 class ColorSize extends Component
 {
     public $size,$colors,$color_id,$quantity;
     public $open = false;
     public $pivot,$pivot_color_id,$pivot_quantity;
-
+    public $listeners = ['delete'];
     protected $rules = [
         'color_id' => 'required',
         'quantity'=> 'required' 
@@ -60,7 +61,9 @@ class ColorSize extends Component
     }
 
     public function delete(Pivot $pivot){
-        $pivot->delete();        
+        
+        $pivot->delete();      
+         
         $this->size = $this->size->fresh();   
     }
 

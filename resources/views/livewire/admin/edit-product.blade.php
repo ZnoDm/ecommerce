@@ -1,5 +1,31 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-gray-700">
-    <h1 class="text-3xl text-center font-semibold mb-8">Editar producto</h1>
+    <h1 class="text-3xl text-center font-semibold mb-5">Editar producto</h1>
+
+    <div class="mb-4" wire:ignore>
+        <form action="{{route('admin.products.files', $product)}}"
+            method="POST"
+            class="dropzone"
+            id="my-awesome-dropzone"></form>
+    </div>
+    
+    @if ($product->images->count())
+        <section class="bg-white shadow-xl rounded-lg p-6 mb-4">
+            <h1>Imagenes del producto</h1>
+            <ul class="flex flex-wrap space-x-4">
+                @foreach ($product->images as $image)
+                    <li class="relative" wire:key="imagen-n-{{$image->id}}">
+                        <img class="w-36 h-24 object-cover" src="{{Storage::url($image->url)}}" alt="">
+                        <x-jet-danger-button class="absolute right-1 top-1"
+                            wire:click="deleteImage({{$image->id}})"
+                            wire:loading.attr="disabled"
+                            wire:target="deleteImage({{$image->id}})">
+                            X
+                        </x-jet-danger-button>
+                    </li>
+                @endforeach
+            </ul>
+        </section>
+    @endif
 
     <div class="bg-white shadow-xl rounded-lg p-6">
         <div class="grid grid-cols-2 gap-6 mb-4">
@@ -139,5 +165,91 @@
         @endif
         
     @endif
+
+    @push('script')
+        <script>
+            Dropzone.options.myAwesomeDropzone = { 
+                headers:{
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                dictDefaultMessage: "Arrastre una imagen al recuadro", //Mensaje que quiero que aparezca
+                acceptedFiles: 'image/*',
+                paramName: "file", 
+                maxFilesize: 2, //MB Tamaño permitido 
+                complete: function(file){
+                    this.removeFile(file);
+                },
+                queuecomplete: function(){
+                   Livewire.emit('refreshPost');
+                }
+            };
+            Livewire.on('deleteSize',sizeId => {
+                Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+
+                    Livewire.emitTo('admin.size-product','delete',sizeId);
+
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                }
+                })
+            })
+            Livewire.on('deleteColorProduct',pivot => {
+                Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+
+                    Livewire.emitTo('admin.color-product','delete',pivot);
+
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                }
+                })
+            })
+            Livewire.on('deleteColorSize',pivot => {
+                Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+
+                    Livewire.emitTo('admin.color-size','delete',pivot);
+
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                }
+                })
+            })                                  
+        </script>
+    @endpush
 
 </div>

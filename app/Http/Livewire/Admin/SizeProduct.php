@@ -46,7 +46,7 @@ class SizeProduct extends Component
             ]);
         }   
         $this->reset('name');
-
+        $this->emit('saved');
         $this->product = $this->product->fresh();
 
     }
