@@ -18,6 +18,10 @@
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         @livewireStyles
+        
+        <!-- Scripts -->
+        <script src="{{ mix('js/app.js') }}" defer></script>
+        
         <!-- ckeditor -->
         <script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
 
@@ -25,8 +29,6 @@
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- dropzone -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js" integrity="sha512-VQQXLthlZQO00P+uEu4mJ4G4OAgqTtKG1hri56kQY1DtdLeIqhKUp9W/lllDDu3uN3SnUNawpW7lBda8+dSi7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
 
         
         

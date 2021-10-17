@@ -19,8 +19,8 @@
                 @foreach ($category->subcategories as $subcategory)
                     <li class="py-2 text-sm">
                         <a
-                        wire:click = "$set('subcategoria','{{$subcategory->name}}')" 
-                        class="cursor-pointer hover:text-orange-500 capitalize {{$subcategory->name == $subcategoria ? 'text-orange-500 font-semibold' : ' '}}">{{$subcategory->name}}</a>
+                        wire:click = "$set('subcategoria','{{$subcategory->slug}}')" 
+                        class="cursor-pointer hover:text-orange-500 capitalize {{$subcategoria  == $subcategory->slug? 'text-orange-500 font-semibold' : ' '}}">{{$subcategory->name}}</a>
                     </li>
                 @endforeach
             </ul>
@@ -47,7 +47,7 @@
         <div class="md:col-span-2 lg:col-span-4">
             @if ($view=='grid')
                 <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    @foreach ($products as $product)
+                    @forelse ($products as $product)
                         <li class="bg-white rounded-lg">
                             <article> 
                                 <figure>
@@ -63,11 +63,19 @@
                                 </div>
                             </article> 
                         </li>
-                    @endforeach
+                    @empty
+                        <li class="md:col-span-2 lg:col-span-4">
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <strong class="font-bold">Uopss!</strong>
+                                <span class="block sm:inline">No existen registros con ese filtro.</span>
+                                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                            </div>
+                        </li>
+                    @endforelse
                 </ul>
             @else
             <ul class="">
-                @foreach ($products as $product)
+                @forelse ($products as $product)
                     <li class="bg-white rounded-lg shadow mb-4">
                         <article class="flex"> 
                             <figure>
@@ -101,7 +109,15 @@
                             </div>
                         </article> 
                     </li>
-                @endforeach
+                @empty
+                    <li class="md:col-span-2 lg:col-span-4">
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                            <strong class="font-bold">Uopss!</strong>
+                            <span class="block sm:inline">No existen registros con ese filtro.</span>
+                            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                        </div>
+                    </li>
+                @endforelse
             </ul>
                 
             @endif

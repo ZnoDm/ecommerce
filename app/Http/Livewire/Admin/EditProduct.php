@@ -22,7 +22,7 @@ class EditProduct extends Component
 
     public $brands;
 
-    protected $listeners = ['refreshPost'];
+    protected $listeners = ['refreshPost','delete'];
     protected $rules = [
         'category_selected' => 'required',
         'product.subcategory_id' => 'required',
@@ -47,6 +47,15 @@ class EditProduct extends Component
         $this->brands = Brand::whereHas('categories',function(Builder $query){
             $query->where('category_id',$this->category_selected);
         })->get();
+    }
+    public function delete(){
+        $images = $this->product->images;
+        foreach($images as $image){
+            Storage::delete($image->url);
+            $image->delete();
+        }
+        $this->product->delete();
+        return redirect()->route('admin.index');
     }
 
     public function refreshPost(){
