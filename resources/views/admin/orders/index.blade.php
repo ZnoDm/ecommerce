@@ -1,17 +1,8 @@
-<x-app-layout>
+<x-admin-layout>
     <div class="container py-12">
-        <section class="grid grid-cols-5 gap-6 text-white">
-            <a href="{{route('orders.index')."?status=1"}}" class="bg-red-500 rounded-lg px-12 pt-8 pb-4">
-                <p class="text-center text-2xl">
-                    {{$pendiente}}
-                </p>
-                <p class="uppercase text-center">Pendiente</p>
-                <p class="text-center text-2xl mt-2">
-                    <i class="fas fa-business-time"></i>
-                </p>
-            </a >
+        <section class="grid grid-cols-4 gap-6 text-white">
 
-            <a href="{{route('orders.index')."?status=2"}}" class="bg-gray-500 rounded-lg px-12 pt-8 pb-4">
+            <a href="{{route('admin.orders.index')."?status=2"}}" class="bg-gray-500 {{ ($status== 2 && $status!= 0) ?'':(($status==0)?'':'bg-opacity-25')}} rounded-lg px-12 pt-8 pb-4">
                 <p class="text-center text-2xl">
                     {{$recibido}}
                 </p>
@@ -21,7 +12,7 @@
                 </p>
             </a >
 
-            <a href="{{route('orders.index')."?status=3"}}" class="bg-yellow-500 rounded-lg px-12 pt-8 pb-4">
+            <a href="{{route('admin.orders.index')."?status=3"}}" class="bg-yellow-500 {{ ($status== 3 && $status!= 0) ?'':'bg-opacity-25'}} rounded-lg px-12 pt-8 pb-4">
                 <p class="text-center text-2xl">
                     {{$enviado}}
                 </p>
@@ -31,7 +22,7 @@
                 </p>
             </a >
 
-            <a href="{{route('orders.index')."?status=4"}}" class="bg-pink-500 rounded-lg px-12 pt-8 pb-4">
+            <a href="{{route('admin.orders.index')."?status=4"}}" class="bg-pink-500 {{ ($status==4 && $status!= 0) ?'':'bg-opacity-25'}} rounded-lg px-12 pt-8 pb-4">
                 <p class="text-center text-2xl">
                     {{$entregado}}
                 </p>
@@ -41,7 +32,7 @@
                 </p>
             </a >
 
-            <a href="{{route('orders.index')."?status=5"}}" class="bg-green-500  rounded-lg px-12 pt-8 pb-4">
+            <a href="{{route('admin.orders.index')."?status=5"}}" class="bg-green-500 {{ ($status==5 && $status!= 0) ?'':'bg-opacity-25'}} rounded-lg px-12 pt-8 pb-4">
                 <p class="text-center text-2xl">
                     {{$anulado}}
                 </p>
@@ -59,7 +50,7 @@
                 <ul>
                     @foreach ($orders as $order)
                         <li>
-                            <a href="{{route('orders.show',$order)}}" class="flex items-center py-2 px-4 hover:bg-gray-100">
+                            <a href="{{route('admin.orders.show',$order)}}" class="flex items-center py-2 px-4 hover:bg-gray-100">
                                 <span class="w-12 text-center">
                                     @switch($order->status)
                                         @case(1)
@@ -130,4 +121,4 @@
         @endif
     
     </div>
-</x-app-layout>
+</x-admin-layout>

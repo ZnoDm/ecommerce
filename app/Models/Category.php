@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable =['name','slug','image','icon'];
+    protected $guarded=[];
 
     //URL Amigable
     public function getRouteKeyName()

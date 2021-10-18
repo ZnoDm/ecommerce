@@ -16,18 +16,19 @@ class PaymentOrder extends Component
     }
 
     //Este método funcionará para Paypal
-    public function payOrderPaypal(){
+    public function payOrderPaypal(){        
+        $this->authorize('payment',$this->order);
         $this->order->status = 2;
         $this->order->save();        
-        $this->authorize('payment',$this->order);
         return redirect()->route('orders.show',$this->order);
     }
     public function render()
     {
         //Policy
         $this->authorize('author',$this->order);
+        $envio = json_decode($this->order->envio);
         
         $items = json_decode($this->order->content);
-        return view('livewire.payment-order',compact('items'));
+        return view('livewire.payment-order',compact('items','envio'));
     }
 }

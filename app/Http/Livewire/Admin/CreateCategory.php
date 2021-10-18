@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
-use phpDocumentor\Reflection\Types\This;
 
 class CreateCategory extends Component
 {
@@ -54,8 +53,6 @@ class CreateCategory extends Component
         'editImage'=> 'image',
         'editForm.brands'=> 'brands',
     ];
-
-    
 
     public function mount(){
         $this->getBrands();

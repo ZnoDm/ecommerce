@@ -10,11 +10,6 @@ class Subcategory extends Model
     use HasFactory;
     protected $guarded=[];
 
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-    
     //Relacion uno a muchos
     public function products(){
         return $this->hasMany(Product::class);
