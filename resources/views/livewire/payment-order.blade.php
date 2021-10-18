@@ -58,7 +58,7 @@
     
                                 <p class="text-sm">Los productos serán enviados a:</p>
                                 <p class="text-sm">{{$envio->address}}</p>
-                                <p>{{$envio->department}}-{{$envio->city}}-{{$envio->district}}</p>
+                                <p>{{$envio->department}}-{{$envio->city}}-{{$envio->district}}-{{$envio->reference}}</p>
                             @endif
                         </div>
     
@@ -145,11 +145,10 @@
                             </p>
                             
                     </div>
-                    <hr class="my-4">
-                    <div>
-                        <h2 class="uppercase text-sm text-center" style="width: 100%; 
+                    <div class="my-6 ">
+                        <h2 class="uppercase text-sm text-center text-gray-500" style="width: 100%; 
                         text-align: center; 
-                        border-bottom: 1px solid; 
+                        border-bottom: 1px solid #e0dada; 
                         line-height: 0.1em;
                         margin: 10px 0 20px; "><span style="background:#fff; 
     padding:0 10px; ">PUEDE PAGAR CON</span></h2>
@@ -158,8 +157,14 @@
                         <x-mercadopago/>
                         <div class="cho-container"></div>
                     </div>
-                    <hr class="my-4">
-                    <p class="uppercase text-sm text-center">o </p>
+                    <div class="my-4">
+                        <h2 class="uppercase text-sm text-center  text-gray-500" style="width: 100%; 
+                        text-align: center; 
+                        border-bottom: 1px solid #e0dada; 
+                        line-height: 0.1em;
+                        margin: 10px 0 20px; "><span style="background:#fff; 
+    padding:0 10px; ">O</span></h2>
+                    </div>
                     <div class="mt-4">
                         <div id="paypal-button-container"></div>
                     </div>

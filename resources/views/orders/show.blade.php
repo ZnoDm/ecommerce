@@ -59,7 +59,7 @@
 
                         <p class="text-sm">Los productos serán enviados a:</p>
                         <p class="text-sm">{{$envio->address}}</p>
-                        <p>{{$envio->department}}-{{$envio->city}}-{{$envio->district}}</p>
+                        <p>{{$envio->department}}-{{$envio->city}}-{{$envio->district}}-{{$envio->reference}}</p>
                     @endif
                 </div>
 
