@@ -3,13 +3,12 @@
         <div class="px-6 py-2 flex justify-between items-center">
             <h1 class="font font-semibold text-gray-700 uppercase">{{$category->name}}</h1>
 
-            <div class="grid grid-cols-2 border border-gray-200 divide-x divide-gray-200 text-gray-500">
+            <div class="hidden md:block grid grid-cols-2 border border-gray-200 divide-x divide-gray-200 text-gray-500">
                 <i class="fas fa-border-all p-3 cursor-pointer {{$view == 'grid' ? 'text-orange-500' :''}}" wire:click="$set('view','grid')"></i>
                 <i class="fas fa-th-list p-3 cursor-pointer {{$view == 'list' ? 'text-orange-500' :''}}" wire:click="$set('view','list')"></i>
             </div>
 
-        </div>
-        
+        </div> 
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -51,7 +50,12 @@
                         <li class="bg-white rounded-lg">
                             <article> 
                                 <figure>
-                                    <img class="h-48 w-full object-cover object-center" src="{{Storage::url($product->images->first()->url)}}" alt="">
+                                    @if(!$product->images->isEmpty())
+                                    
+                                        <img class="h-48 w-full object-cover object-center" src="{{Storage::url($product->images->first()->url)}}" alt="">
+                                    @else
+                                        <img class="h-48 w-full object-cover object-center" src="https://images.pexels.com/photos/2536965/pexels-photo-2536965.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="">
+                                    @endif
                                 </figure>
                                 <div class="px-4 py-6">
                                     <h1 class="text-lg font-semibold">
@@ -77,12 +81,12 @@
             <ul class="">
                 @forelse ($products as $product)
                     <li class="bg-white rounded-lg shadow mb-4">
-                        <article class="flex"> 
+                        <article class="md:flex"> 
                             <figure>
-                                <img class="h-48 w-56 object-cover object-center" src="{{Storage::url($product->images->first()->url)}}" alt="">
+                                <img class="h-48 w-full md:w-56 object-cover object-center" src="{{Storage::url($product->images->first()->url)}}" alt="">
                             </figure>
                             <div class="flex-1 py-4 px-6 flex flex-col">
-                                <div class="flex justify-between">
+                                <div class="lg:flex justify-between">
                                     <div>
                                         <h1 class="text-lg font-semibold text-gray-700">
                                             {{$product->name}}
@@ -100,7 +104,7 @@
                                         <span class="text-sm">(40)</span>
                                     </div>
                                 </div>
-                                <div class="mt-auto">
+                                <div class="mt-4 md:mt-auto">
                                     <x-danger-enlace href="{{route('products.show',$product)}}">
                                         Más informacion
                                     </x-danger-enlace>

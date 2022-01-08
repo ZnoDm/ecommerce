@@ -11,6 +11,7 @@ use App\Http\Livewire\Admin\EditProduct;
 use App\Http\Livewire\Admin\ShowCategory;
 use App\Http\Livewire\Admin\ShowDepartment;
 use App\Http\Livewire\Admin\ShowProducts;
+use App\Http\Livewire\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', ShowProducts::class)->name('admin.index');
@@ -35,3 +36,5 @@ Route::get('departments', DepartmentController::class)->name('admin.departments.
 Route::get('departments/{department}', ShowDepartment::class)->name('admin.departments.show');
 
 Route::get('cities/{city}', DistrictCity::class)->name('admin.cities.show');
+
+Route::get('users', UserController::class)->name('admin.users.index');

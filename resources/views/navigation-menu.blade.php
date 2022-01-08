@@ -15,6 +15,11 @@
                     <x-jet-nav-link href="{{route('admin.orders.index')}}" :active="request()->routeIs('admin.orders.*')">
                         Ordenes
                     </x-jet-nav-link>
+                    
+                    <x-jet-nav-link href="{{route('admin.users.index')}}" :active="request()->routeIs('admin.users.index')">
+                        Usuarios
+                    </x-jet-nav-link>
+                    
                     <x-jet-nav-link href="{{route('admin.index')}}" :active="request()->routeIs('admin.index')">
                         Productos
                     </x-jet-nav-link>

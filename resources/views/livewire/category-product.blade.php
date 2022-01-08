@@ -6,7 +6,12 @@
                 <li class="bg-white rounded-lg {{$loop->last ? '':'sm:mr-4'}}">
                     <article> 
                         <figure>
-                            <img class="h-48 w-full object-cover object-center" src="{{Storage::url($product->images->first()->url)}}" alt="">
+                            @if(!$product->images->isEmpty())
+                                    
+                                        <img class="h-48 w-full object-cover object-center" src="{{Storage::url($product->images->first()->url)}}" alt="">
+                                    @else
+                                        <img class="h-48 w-full object-cover object-center" src="https://images.pexels.com/photos/2536965/pexels-photo-2536965.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="">
+                                    @endif
                         </figure>
                         <div class="px-4 py-6">
                             <h1 class="text-lg font-semibold">

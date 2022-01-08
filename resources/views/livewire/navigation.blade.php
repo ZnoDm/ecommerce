@@ -41,9 +41,11 @@
                             Mis Ordenes
                         </x-jet-dropdown-link>
 
-                        <x-jet-dropdown-link href="{{ route('admin.index') }}">
-                            Administrador
-                        </x-jet-dropdown-link>
+                        @role('admin')
+                            <x-jet-dropdown-link href="{{ route('admin.index') }}">
+                                Administrador
+                            </x-jet-dropdown-link>
+                        @endrole
 
                         <div class="border-t border-gray-100"></div>
 
@@ -134,6 +136,18 @@
                     </span>
                     Perfil
                 </a>
+                <a href="{{route('orders.index')}}" class="py-3 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
+                    <span class="flex justify-center w-9">
+                    </span>
+                    Mis Ordenes
+                </a>
+                @role('admin')
+                <a href="{{route('admin.index')}}" class="py-3 px-4 text-sm flex items-center text-trueGray-500 hover:bg-orange-500 hover:text-white">
+                    <span class="flex justify-center w-9">
+                    </span>
+                    Administrador
+                </a>
+                @endrole
                 <a href="" 
                 onclick="event.preventDefault()
                 document.getElementById('logout-form').submit()"
