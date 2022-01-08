@@ -1,7 +1,7 @@
 ## Comentarios:
 Usar el archivo env.example y configurarlo a su puerto o dominio local.
 
-##Pasos:
+## Pasos:
 
 1. Al momento de clonar creen una nuevar rama y partan de la rama dev.
 2. Una vez clonado, muevete a tu rama y usa **composer install** para instalar todas las dependencias
