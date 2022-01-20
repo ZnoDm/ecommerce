@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 class OrderController extends Controller
 {
@@ -61,5 +62,22 @@ class OrderController extends Controller
         $items = json_decode($order->content);
         $envio = json_decode($order->envio);
         return view('orders.show',compact('order','items','envio'));
+    }
+
+    public function updatedOrder(Request $request)
+    {
+        $order = Order::where('id', '=', $request->id)->get();
+        $order->update([
+            'status' => $request->status
+        ]);
+
+        return response()->json(['message' => 'Actualizado correctamente'],status:200);
+    }
+
+    public function getOrder(Request $request)
+    {
+        $order = DB::select('call SP_OrderProducts('.$request->order_id.')');
+
+        return response()->json($order, status:200);
     }
 }

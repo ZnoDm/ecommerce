@@ -29,4 +29,9 @@ class Order extends Model
     {
         return $this->belongsTo(District::class);
     }
+
+    public function repartidores()
+    {
+        return $this->belongsToMany(Repartidore::class);
+    }
 }
