@@ -6,7 +6,10 @@ use App\Models\City;
 use App\Models\Department;
 use App\Models\District;
 use App\Models\Order;
+use App\Models\OrderRepartidore;
+use App\Models\Repartidore;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class CreateOrder extends Component
@@ -57,6 +60,8 @@ class CreateOrder extends Component
     public function create_order()
     {
        $rules = $this->rules;
+       
+       $fechahoy = date('Y-m-d');
 
        if($this->envio_type == 2){
         $rules['department_selected'] ='required';
@@ -75,6 +80,7 @@ class CreateOrder extends Component
        $order->shipping_cost = 0;
        $order->total = $this->shipping_cost + Cart::subtotal();
        $order->content = Cart::content();
+       $order->fecha_entrega = date('Y-m-d', strtotime($fechahoy.'+ 1 week'));
        
        if($this->envio_type == 2){
             $order->shipping_cost = $this->shipping_cost;
@@ -89,10 +95,26 @@ class CreateOrder extends Component
                 'district' => District::find($this->district_selected)->name,
                 'reference'=> $this->reference,
                 'address'=> $this->address
-                
             ]);
        }
+       
        $order->save();
+
+       $orderRepartidor = new OrderRepartidore();
+       $orderRepartidor->order_id = $order->id;
+       $repartidor = DB::table('repartidores as r')
+                        ->select('r.id as id',DB::raw('count(orp.id) as cantidad'))
+                        ->join('order_repartidore as orp','orp.repartidore_id', '=', 'r.id')
+                        ->groupBy('r.id')
+                        ->orderBy('cantidad', 'asc')
+                        ->first();
+       $orderRepartidor->repartidore_id = $repartidor->id;
+       $orderRepartidor->fechaEntrega = $order->fecha_entrega;
+       $orderRepartidor->nombreCliente = $order->contact;
+       $orderRepartidor->telefono = $order->phone;
+       $orderRepartidor->direccion = $order->envio;
+
+       $orderRepartidor->save();
 
        foreach(Cart::content() as $item){
             discount($item);
