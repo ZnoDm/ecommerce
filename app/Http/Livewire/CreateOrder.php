@@ -80,7 +80,7 @@ class CreateOrder extends Component
        $order->shipping_cost = 0;
        $order->total = $this->shipping_cost + Cart::subtotal();
        $order->content = Cart::content();
-       $order->fecha_entrega = date('Y-m-d', strtotime($fechahoy.'+ 1 week'));
+       $order->fecha_entrega = date('Y-m-d');
        
        if($this->envio_type == 2){
             $order->shipping_cost = $this->shipping_cost;
