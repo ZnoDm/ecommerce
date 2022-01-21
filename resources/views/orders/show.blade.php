@@ -54,7 +54,7 @@
 
                         <p class="text-sm">Los productos deben ser recogidos en tienda</p>
                         <p class="text-sm">Calle Falsa 123</p>
-                        
+
                     @else
 
                         <p class="text-sm">Los productos serán enviados a:</p>
@@ -75,10 +75,10 @@
         </div>
         <div class="bg-white rounded-lg shadow-lg p-6 text-gray-700 mb-6">
             <p class="text-xl font-semibold mb-4">Resumen</p>
-
             <table class="table-auto w-full">
                 <thead>
                     <tr>
+                        <th>QR</th>
                         <th></th>
                         <th>Precio</th>
                         <th>Cantidad</th>
@@ -88,6 +88,11 @@
                 <tbody class="divide-y divide-gray-200">
                     @foreach($items as $item)
                         <tr>
+                            <td>
+                                <div class="flex" style="justify-content:  center">
+                                    {!! QrCode::size(80)->generate(''.($item->id)) !!}
+                                </div>
+                            </td>
                             <td>
                                 <div class="flex">
                                     <img class="h-15 w-20 object-cover mr-4" src="{{$item->options->image}}" alt="">
@@ -115,14 +120,14 @@
                             <td class="text-center">
                                 {{$item->price * $item->qty}} USD
                             </td>
-                            
+
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
 
-        
+
     </div>
 
 </x-app-layout>
