@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderRepartidoreController;
 use App\Http\Controllers\RepartidoreController;
 use App\Models\OrderRepartidore;

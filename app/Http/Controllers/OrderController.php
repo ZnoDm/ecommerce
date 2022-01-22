@@ -78,6 +78,8 @@ class OrderController extends Controller
     {
         $order = DB::select('call SP_OrderProducts('.$request->order_id.')');
 
-        return response()->json($order, status:200);
+        $productos = json_decode($order[0]->content);
+
+        return response()->json([$order, $productos], status:200);
     }
 }

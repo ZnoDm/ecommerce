@@ -11,6 +11,11 @@ class OrderRepartidoreController extends Controller
     public function Orders(Request $request)
     {
         $orders = DB::select('call SP_Orders ('.$request->repartidore_id.', '.$request->fechaEntrega.');');
-        return response()->json($orders, $status=200);
+        $array = [];
+
+        foreach ($orders as $order) {
+            $array[] = [json_decode($order->direccion), $order];
+        }
+        return response()->json($array, status:200);
     }
 }

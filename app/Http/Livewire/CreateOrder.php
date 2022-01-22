@@ -100,21 +100,24 @@ class CreateOrder extends Component
        
        $order->save();
 
-       $orderRepartidor = new OrderRepartidore();
-       $orderRepartidor->order_id = $order->id;
-       $repartidor = DB::table('repartidores as r')
-                        ->select('r.id as id',DB::raw('count(orp.id) as cantidad'))
-                        ->join('order_repartidore as orp','orp.repartidore_id', '=', 'r.id')
-                        ->groupBy('r.id')
-                        ->orderBy('cantidad', 'asc')
-                        ->first();
-       $orderRepartidor->repartidore_id = $repartidor->id;
-       $orderRepartidor->fechaEntrega = $order->fecha_entrega;
-       $orderRepartidor->nombreCliente = $order->contact;
-       $orderRepartidor->telefono = $order->phone;
-       $orderRepartidor->direccion = $order->envio;
+       if ($this->envio_type == 2) {
+            $orderRepartidor = new OrderRepartidore();
+            $orderRepartidor->order_id = $order->id;
+            /* $repartidor = DB::table('repartidores as r')
+            ->select('r.id as id', DB::raw('count(orp.id) as cantidad'))
+            ->join('order_repartidore as orp', 'orp.repartidore_id', '=', 'r.id')
+                ->groupBy('r.id')
+                ->orderBy('cantidad', 'asc')
+                ->first(); */
+            $orderRepartidor->repartidore_id = 1;
+            $orderRepartidor->fechaEntrega = $order->fecha_entrega;
+            $orderRepartidor->nombreCliente = $order->contact;
+            $orderRepartidor->telefono = $order->phone;
+            $orderRepartidor->direccion = $order->envio;
+            
+            $orderRepartidor->save();
+       }
 
-       $orderRepartidor->save();
 
        foreach(Cart::content() as $item){
             discount($item);
