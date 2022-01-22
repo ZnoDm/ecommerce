@@ -80,6 +80,11 @@ class OrderController extends Controller
 
         $productos = json_decode($order[0]->content);
 
-        return response()->json([$order, $productos], status:200);
+        $direccion = json_decode($order[0]->envio);
+
+        $order[0]->content = $productos;
+        $order[0]->envio = $direccion;
+
+        return response()->json($order, status:200);
     }
 }
